@@ -2,7 +2,7 @@ name: "Narrapssry's blog"
 description: "一个经管学术小白的个人网站"
 
 avatar: https://narrapssry.github.io/_imagine/avatar.webp
-favicon: https://narrapssry.github.io/_imagine/avatar.webp
+favicon: https://narrapssry.github.io/_imagine/cat.ico
 
 navigation:
   - name: 首页
