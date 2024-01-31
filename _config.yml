@@ -1,8 +1,8 @@
 name: "Narrapssry's blog"
 description: "一个经管学术小白的个人网站"
 
-avatar: https://raw.githubusercontent.com/narrapssry/narrapssry.github.io/main/_imagine/avatar.webp
-favicon: https://raw.githubusercontent.com/narrapssry/narrapssry.github.io/main/_imagine/avatar.webp
+avatar: https://narrapssry.github.io/_imagine/avatar.webp
+favicon: https://narrapssry.github.io/_imagine/avatar.webp
 
 navigation:
   - name: 首页
