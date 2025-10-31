@@ -21,7 +21,8 @@
 
   {% if page.toc==true %}
   <script>
-    document.getElementById("main").classList.add("withtoc");
+    var mainContent = document.getElementById("main");
+    mainContent.classList.add("withtoc");
   </script>
   {% endif %}
 

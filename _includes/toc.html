@@ -61,25 +61,25 @@
             {% assign indentAmount = lastIndent | plus: 1 %}
         {% endif %}
 
-        {% assign _workspace = node | split: '</h' %}
+        {% assign headerWorkspace = node | split: '</h' %}
 
-        {% assign _idWorkspace = _workspace[0] | split: 'id="' %}
-        {% assign _idWorkspace = _idWorkspace[1] | split: '"' %}
-        {% assign html_id = _idWorkspace[0] %}
+        {% assign idWorkspace = headerWorkspace[0] | split: 'id="' %}
+        {% assign idWorkspace = idWorkspace[1] | split: '"' %}
+        {% assign html_id = idWorkspace[0] %}
 
-        {% assign _classWorkspace = _workspace[0] | split: 'class="' %}
-        {% assign _classWorkspace = _classWorkspace[1] | split: '"' %}
-        {% assign html_class = _classWorkspace[0] %}
+        {% assign classWorkspace = headerWorkspace[0] | split: 'class="' %}
+        {% assign classWorkspace = classWorkspace[1] | split: '"' %}
+        {% assign html_class = classWorkspace[0] %}
 
         {% if html_class contains "no_toc" %}
             {% continue %}
         {% endif %}
 
-        {% capture _hAttrToStrip %}{{ _workspace[0] | split: '>' | first }}>{% endcapture %}
-        {% assign header = _workspace[0] | replace: _hAttrToStrip, '' %}
+        {% capture headerAttributesToStrip %}{{ headerWorkspace[0] | split: '>' | first }}>{% endcapture %}
+        {% assign header = headerWorkspace[0] | replace: headerAttributesToStrip, '' %}
 
         {% assign space = '' %}
-        {% for i in (1..indentAmount) %}
+        {% for indentLevel in (1..indentAmount) %}
             {% assign space = space | prepend: '    ' %}
         {% endfor %}
 
