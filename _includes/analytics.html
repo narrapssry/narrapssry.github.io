@@ -1,10 +1,9 @@
 {% if site.google_analytics %}
 	<!-- Google Analytics -->
 	<script>
-		// Google Analytics tracking code with standard obfuscated variable names
-		(function(windowObj,documentObj,scriptTag,analyticsUrl,gaObject,scriptElement,firstScript){windowObj['GoogleAnalyticsObject']=gaObject;windowObj[gaObject]=windowObj[gaObject]||function(){
-		(windowObj[gaObject].q=windowObj[gaObject].q||[]).push(arguments)},windowObj[gaObject].l=1*new Date();scriptElement=documentObj.createElement(scriptTag),
-		firstScript=documentObj.getElementsByTagName(scriptTag)[0];scriptElement.async=1;scriptElement.src=analyticsUrl;firstScript.parentNode.insertBefore(scriptElement,firstScript)
+		(function(i,s,o,g,r,a,m){i['GoogleAnalyticsObject']=r;i[r]=i[r]||function(){
+		(i[r].q=i[r].q||[]).push(arguments)},i[r].l=1*new Date();a=s.createElement(o),
+		m=s.getElementsByTagName(o)[0];a.async=1;a.src=g;m.parentNode.insertBefore(a,m)
 		})(window,document,'script','//www.google-analytics.com/analytics.js','ga');
 
 		ga('create', '{{ site.google_analytics }}', 'auto');
