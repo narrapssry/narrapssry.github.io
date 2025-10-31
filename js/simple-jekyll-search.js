@@ -195,12 +195,12 @@ function search (searchTerm) {
 }
 
 function setOptions (newOptions) {
-  options = newOptions || {}
+  newOptions = newOptions || {}
 
-  options.fuzzy = options.fuzzy || false
-  options.limit = options.limit || 10
-  options.searchStrategy = options.fuzzy ? _$FuzzySearchStrategy_5 : _$LiteralSearchStrategy_6
-  options.sort = options.sort || NoSort
+  options.fuzzy = newOptions.fuzzy || false
+  options.limit = newOptions.limit || 10
+  options.searchStrategy = newOptions.fuzzy ? _$FuzzySearchStrategy_5 : _$LiteralSearchStrategy_6
+  options.sort = newOptions.sort || NoSort
 }
 
 function findMatches (data, searchTerm, strategy, options) {
