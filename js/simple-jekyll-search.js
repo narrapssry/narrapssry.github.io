@@ -74,18 +74,18 @@ var _$OptionsValidator_3 = function OptionsValidator (params) {
 'use strict';
 
 function fuzzysearch (needle, haystack) {
-  var tlen = haystack.length;
-  var qlen = needle.length;
-  if (qlen > tlen) {
+  var haystackLength = haystack.length;
+  var needleLength = needle.length;
+  if (needleLength > haystackLength) {
     return false;
   }
-  if (qlen === tlen) {
+  if (needleLength === haystackLength) {
     return needle === haystack;
   }
-  outer: for (var i = 0, j = 0; i < qlen; i++) {
-    var nch = needle.charCodeAt(i);
-    while (j < tlen) {
-      if (haystack.charCodeAt(j++) === nch) {
+  outer: for (var needleIndex = 0, haystackIndex = 0; needleIndex < needleLength; needleIndex++) {
+    var needleChar = needle.charCodeAt(needleIndex);
+    while (haystackIndex < haystackLength) {
+      if (haystack.charCodeAt(haystackIndex++) === needleChar) {
         continue outer;
       }
     }
@@ -103,8 +103,8 @@ var _$fuzzysearch_1 = fuzzysearch;
 var _$FuzzySearchStrategy_5 = new FuzzySearchStrategy()
 
 function FuzzySearchStrategy () {
-  this.matches = function (string, crit) {
-    return _$fuzzysearch_1(crit.toLowerCase(), string.toLowerCase())
+  this.matches = function (string, searchTerm) {
+    return _$fuzzysearch_1(searchTerm.toLowerCase(), string.toLowerCase())
   }
 }
 
@@ -113,15 +113,15 @@ function FuzzySearchStrategy () {
 var _$LiteralSearchStrategy_6 = new LiteralSearchStrategy()
 
 function LiteralSearchStrategy () {
-  this.matches = function (str, crit) {
-    if (!str) return false
+  this.matches = function (string, searchTerm) {
+    if (!string) return false
 
-    str = str.trim().toLowerCase()
-    crit = crit.trim().toLowerCase()
+    string = string.trim().toLowerCase()
+    searchTerm = searchTerm.trim().toLowerCase()
 
-    return crit.split(' ').filter(function (word) {
-      return str.indexOf(word) >= 0
-    }).length === crit.split(' ').length
+    return searchTerm.split(' ').filter(function (word) {
+      return string.indexOf(word) >= 0
+    }).length === searchTerm.split(' ').length
   }
 }
 
@@ -142,12 +142,12 @@ function NoSort () {
 }
 
 var data = []
-var opt = {}
+var options = {}
 
-opt.fuzzy = false
-opt.limit = 10
-opt.searchStrategy = opt.fuzzy ? _$FuzzySearchStrategy_5 : _$LiteralSearchStrategy_6
-opt.sort = NoSort
+options.fuzzy = false
+options.limit = 10
+options.searchStrategy = options.fuzzy ? _$FuzzySearchStrategy_5 : _$LiteralSearchStrategy_6
+options.sort = NoSort
 
 function put (data) {
   if (isObject(data)) {
@@ -176,37 +176,37 @@ function addObject (_data) {
   return data
 }
 
-function addArray (_data) {
+function addArray (dataArray) {
   var added = []
   clear()
-  for (var i = 0, len = _data.length; i < len; i++) {
-    if (isObject(_data[i])) {
-      added.push(addObject(_data[i]))
+  for (var i = 0, length = dataArray.length; i < length; i++) {
+    if (isObject(dataArray[i])) {
+      added.push(addObject(dataArray[i]))
     }
   }
   return added
 }
 
-function search (crit) {
-  if (!crit) {
+function search (searchTerm) {
+  if (!searchTerm) {
     return []
   }
-  return findMatches(data, crit, opt.searchStrategy, opt).sort(opt.sort)
+  return findMatches(data, searchTerm, options.searchStrategy, options).sort(options.sort)
 }
 
-function setOptions (_opt) {
-  opt = _opt || {}
+function setOptions (newOptions) {
+  options = newOptions || {}
 
-  opt.fuzzy = _opt.fuzzy || false
-  opt.limit = _opt.limit || 10
-  opt.searchStrategy = _opt.fuzzy ? _$FuzzySearchStrategy_5 : _$LiteralSearchStrategy_6
-  opt.sort = _opt.sort || NoSort
+  options.fuzzy = newOptions.fuzzy || false
+  options.limit = newOptions.limit || 10
+  options.searchStrategy = newOptions.fuzzy ? _$FuzzySearchStrategy_5 : _$LiteralSearchStrategy_6
+  options.sort = newOptions.sort || NoSort
 }
 
-function findMatches (data, crit, strategy, opt) {
+function findMatches (data, searchTerm, strategy, options) {
   var matches = []
-  for (var i = 0; i < data.length && matches.length < opt.limit; i++) {
-    var match = findMatchesInObject(data[i], crit, strategy, opt)
+  for (var i = 0; i < data.length && matches.length < options.limit; i++) {
+    var match = findMatchesInObject(data[i], searchTerm, strategy, options)
     if (match) {
       matches.push(match)
     }
@@ -214,10 +214,10 @@ function findMatches (data, crit, strategy, opt) {
   return matches
 }
 
-function findMatchesInObject (obj, crit, strategy, opt) {
-  for (var key in obj) {
-    if (!isExcluded(obj[key], opt.exclude) && strategy.matches(obj[key], crit)) {
-      return obj
+function findMatchesInObject (object, searchTerm, strategy, options) {
+  for (var key in object) {
+    if (!isExcluded(object[key], options.exclude) && strategy.matches(object[key], searchTerm)) {
+      return object
     }
   }
 }
@@ -225,7 +225,7 @@ function findMatchesInObject (obj, crit, strategy, opt) {
 function isExcluded (term, excludedTerms) {
   var excluded = false
   excludedTerms = excludedTerms || []
-  for (var i = 0, len = excludedTerms.length; i < len; i++) {
+  for (var i = 0, length = excludedTerms.length; i < length; i++) {
     var excludedTerm = excludedTerms[i]
     if (!excluded && new RegExp(term).test(excludedTerm)) {
       excluded = true
@@ -393,11 +393,11 @@ var _$src_8 = {};
   }
 
   function render (results, query) {
-    var len = results.length
-    if (len === 0) {
+    var length = results.length
+    if (length === 0) {
       return appendToResultsContainer(options.noResultsText)
     }
-    for (var i = 0; i < len; i++) {
+    for (var i = 0; i < length; i++) {
       results[i].query = query
       appendToResultsContainer(_$Templater_7.compile(results[i]))
     }
