@@ -1,34 +1,44 @@
-<!DOCTYPE html>
-<html>
-  {% include head.html %}
+<!doctype html>
+<html lang="{{ site.lang | default: 'en' | escape }}">
+  <head>
+    <meta charset="utf-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1">
+    <title>{{ page.title | escape }} · {{ site.name | escape }}</title>
+    <meta name="description" content="{{ page.description | default: site.description | escape }}">
+    <meta name="theme-color" content="#faf9f6">
+    <link rel="stylesheet" href="{{ '/assets/css/main.css' | relative_url }}">
+    <link rel="icon" href="{{ '/assets/favicon.svg' | relative_url }}" type="image/svg+xml">
+  </head>
   <body>
-    {% include nav.html %}
+    <a class="skip-link" href="#main-content">Skip to content</a>
+    <div class="site-shell">
+      <header class="site-header">
+        <a class="site-name" href="{{ '/' | relative_url }}">{{ site.name | escape }}</a>
+        <nav aria-label="Main navigation">
+          <ul class="nav-list">
+            {% for item in site.navigation %}
+            <li>
+              <a href="{{ item.url | relative_url }}"{% if page.url == item.url %} aria-current="page"{% endif %}>{{ item.title | escape }}</a>
+            </li>
+            {% endfor %}
+          </ul>
+        </nav>
+      </header>
 
-    {% if page.toc==true %}
-      <aside class="toc">
-        {% include toc.html html=content %}
-      </aside>
-    {% endif %}
+      <main id="main-content" class="main-content" tabindex="-1">
+        <article class="page{% if page.url == '/' %} page-home{% endif %}">
+          {% if page.eyebrow %}<p class="eyebrow">{{ page.eyebrow | escape }}</p>{% endif %}
+          <h1>{% if page.url == '/' %}{{ site.name | escape }}{% else %}{{ page.title | escape }}{% endif %}</h1>
+          <div class="page-body">
+            {{ content }}
+          </div>
+        </article>
+      </main>
 
-    <div id="main" role="main" class="wrapper-content">
-      <div class="container">
-        {{ content }}
-      </div>
+      <footer class="site-footer">
+        <span>© {{ site.time | date: '%Y' }} {{ site.name | escape }}</span>
+        <span>Personal website</span>
+      </footer>
     </div>
-
-    {% include analytics.html %}
   </body>
-
-  {% if page.toc==true %}
-  <script>
-    document.getElementById("main").classList.add("withtoc");
-  </script>
-  {% endif %}
-
-  <div class="wrapper-footer-mobile">
-    <footer class="footer">
-      {% include footer.html %}
-    </footer>
-
-
 </html>

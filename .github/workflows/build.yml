@@ -1,30 +1,28 @@
-name: Build and Test
+name: Build website
 
 on:
   push:
-    branches:
-      - main
+    branches: [main]
+  pull_request:
+  workflow_dispatch:
+
+permissions:
+  contents: read
 
 jobs:
   build:
     runs-on: ubuntu-latest
-
     steps:
-    - name: Checkout Repository
-      uses: actions/checkout@v3
-      
-    - name: Setup Node.js environment
-      uses: actions/setup-node@v4.0.1
-      with:
-        node-version: 20
-        
-    - run: npm install -g bats
-    
-    - run: bats -v
-      
-    - name: Upload a Build Artifact
-      uses: actions/upload-artifact@v4.3.0
-      with:
-        name: 'my-blog'
-        path: '_site'
-        
+      - name: Checkout
+        uses: actions/checkout@v4
+      - name: Build Jekyll site
+        uses: actions/jekyll-build-pages@v1
+        with:
+          source: ./
+          destination: ./_site
+      - name: Upload built website
+        uses: actions/upload-artifact@v4
+        with:
+          name: website
+          path: _site
+          if-no-files-found: error

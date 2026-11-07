@@ -1,0 +1,156 @@
+:root {
+  color-scheme: light;
+  --paper: #faf9f6;
+  --ink: #20332e;
+  --text: #404a46;
+  --muted: #68716b;
+  --accent: #52694f;
+  --rule: #dedfd6;
+  --serif: "Iowan Old Style", "Palatino Linotype", "Book Antiqua", Georgia, serif;
+  --sans: -apple-system, BlinkMacSystemFont, "Segoe UI", sans-serif;
+}
+
+* { box-sizing: border-box; }
+html { background: var(--paper); -webkit-text-size-adjust: 100%; }
+body {
+  margin: 0;
+  color: var(--text);
+  font-family: var(--sans);
+  font-size: 17px;
+  line-height: 1.75;
+  -webkit-font-smoothing: antialiased;
+}
+::selection { background: #dce3d5; color: var(--ink); }
+a { color: var(--accent); text-underline-offset: 0.25em; }
+a:hover { color: var(--ink); }
+a:focus-visible { outline: 2px solid var(--accent); outline-offset: 6px; }
+
+.skip-link {
+  position: fixed;
+  top: 12px;
+  left: 12px;
+  z-index: 1;
+  padding: 8px 16px;
+  background: var(--ink);
+  color: var(--paper);
+  transform: translateY(-180%);
+}
+.skip-link:focus { transform: translateY(0); color: var(--paper); }
+
+.site-shell {
+  width: min(100% - 96px, 1040px);
+  min-height: 100svh;
+  margin-inline: auto;
+  display: flex;
+  flex-direction: column;
+}
+.site-header {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  gap: 32px;
+  padding-block: 37px 30px;
+  border-bottom: 1px solid var(--rule);
+}
+.site-name {
+  color: var(--ink);
+  font-family: var(--serif);
+  font-size: 27px;
+  line-height: 1.25;
+  letter-spacing: -0.025em;
+  text-decoration: none;
+}
+.nav-list {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 32px;
+  padding: 0;
+  margin: 0;
+  list-style: none;
+}
+.nav-list a {
+  display: inline-block;
+  padding-block: 4px;
+  border-bottom: 1px solid transparent;
+  color: var(--muted);
+  font-size: 14px;
+  line-height: 1.5;
+  text-decoration: none;
+}
+.nav-list a:hover { color: var(--ink); border-color: var(--rule); }
+.nav-list a[aria-current="page"] { color: var(--ink); border-color: var(--accent); }
+
+.main-content {
+  flex: 1;
+  width: 100%;
+  padding-block: clamp(72px, 12vh, 136px) 120px;
+}
+.main-content:focus { outline: none; }
+.page { max-width: 730px; }
+.eyebrow {
+  display: flex;
+  align-items: center;
+  gap: 12px;
+  margin: 0 0 23px;
+  color: var(--accent);
+  font-size: 11px;
+  font-weight: 500;
+  letter-spacing: 0.17em;
+  line-height: 1.5;
+  text-transform: uppercase;
+}
+.eyebrow::before { content: ""; width: 27px; height: 1px; background: currentColor; }
+h1, h2, h3 {
+  color: var(--ink);
+  font-family: var(--serif);
+  font-weight: 400;
+  text-wrap: balance;
+}
+h1 {
+  margin: 0;
+  font-size: clamp(48px, 6.2vw, 76px);
+  letter-spacing: -0.045em;
+  line-height: 1.12;
+  overflow-wrap: anywhere;
+}
+.page-home h1 { font-size: clamp(54px, 7.2vw, 88px); }
+.page-body { margin-top: 34px; overflow-wrap: break-word; }
+.page-body > :first-child { margin-top: 0; }
+.page-body > :last-child { margin-bottom: 0; }
+.placeholder { color: var(--muted); font-size: 16px; }
+h2 { margin: 52px 0 16px; font-size: 32px; letter-spacing: -0.025em; line-height: 1.25; }
+h3 { margin: 32px 0 12px; font-size: 24px; line-height: 1.35; }
+p, ul, ol { margin: 0 0 22px; }
+li + li { margin-top: 8px; }
+.nav-list li + li { margin-top: 0; }
+img { max-width: 100%; height: auto; }
+blockquote { margin: 28px 0; padding-left: 22px; border-left: 2px solid var(--rule); }
+hr { margin: 40px 0; border: 0; border-top: 1px solid var(--rule); }
+pre { max-width: 100%; overflow-x: auto; }
+.site-footer {
+  display: flex;
+  flex-wrap: wrap;
+  align-items: center;
+  justify-content: space-between;
+  gap: 8px 24px;
+  padding-block: 23px 28px;
+  border-top: 1px solid var(--rule);
+  color: var(--muted);
+  font-size: 12px;
+  line-height: 1.6;
+}
+@media (max-width: 600px) {
+  .site-shell { width: calc(100% - 48px); }
+  .site-header { flex-direction: column; align-items: flex-start; gap: 22px; padding-block: 28px 24px; }
+  .site-name { font-size: 25px; }
+  .nav-list { gap: 28px; }
+  .main-content { padding-block: 68px 100px; }
+  .page-body { margin-top: 28px; }
+  .site-footer { padding-block: 20px 24px; }
+}
+@media print {
+  .site-shell { width: 100%; min-height: auto; }
+  .site-header nav, .skip-link { display: none; }
+  .main-content { padding-block: 48px; }
+  body, html { background: white; }
+}

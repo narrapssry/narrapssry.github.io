@@ -1,3 +1,6 @@
-# jekyll local file
+# Jekyll local files
 .jekyll*
 _site
+.DS_Store
+.bundle/
+vendor/
